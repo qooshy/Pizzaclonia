@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Accès Refusé - PizzaClonia(TM){% endblock %}
+
+{% block content %}
+<div class="error-page">
+  <div class="error-code">403</div>
+  <h2 style="margin-top: 1rem;">Accès non autorisé</h2>
+  <p style="color: var(--text-muted); font-style: italic; margin-top: 1rem; max-width: 420px; text-align: center;">
+    Ce portail est réservé au personnel de la famille.
+    Si vous êtes un clone, vous savez ce que vous avez à faire.
+  </p>
+  <p style="margin-top: 1.5rem; font-family: 'Orbitron', monospace; font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.2em;">
+    HINT: LES CLONES N'OUBLIENT PAS LEUR TOKEN
+  </p>
+  <a href="/" class="btn btn-outline" style="margin-top: 2rem;">Retourner sur Terre</a>
+</div>
+{% endblock %}

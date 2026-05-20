@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% block title %}Portail Staff - PizzaClonia(TM){% endblock %}
+
+{% block content %}
+<div class="portal-container">
+
+  <div class="portal-header">
+    <p class="section-label"> PORTAIL INTERNE - USAGE CLONES UNIQUEMENT</p>
+    <h1 style="font-size: 1.5rem;">Staff Panel <span style="color: var(--accent); font-size: 0.8rem;">BETA</span></h1>
+    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">
+      Authentifié via token clone. Bienvenue, unité. Tous les clones se font confiance - aucune vérification d'identité supplémentaire n'est nécessaire.
+    </p>
+  </div>
+
+  <!-- IDOR SECTION -->
+  <div class="terminal-box">
+    <div class="prompt">zx9@cult-internal:~$ <span class="cmd">cat /docs/acces-staff.txt</span></div>
+    <div class="output">
+      Les commandes sont accessibles via /api/orders/&lt;id&gt;?token={{ token }}<br>
+      Tous les membres de la famille partagent le même accès. Nous sommes un.<br>
+      Note: les IDs vont de 1 à 6. Le profil #4 contient les informations d'administration.
+    </div>
+  </div>
+
+  <h2 style="font-size: 1rem; margin-bottom: 0.5rem;">Commandes récentes</h2>
+  <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+    Cliquez sur une commande pour voir les détails complets. Tous les fichiers sont accessibles à tous les clones.
+  </p>
+
+  <table class="orders-table" id="orders-table">
+    <thead>
+      <tr>
+        <th>#ID</th>
+        <th>Client</th>
+        <th>Statut</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="orders-body">
+      <tr>
+        <td colspan="4" style="color: var(--text-muted); text-align: center; padding: 2rem;">
+          Chargement des unités...
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="detail-panel" id="detail-panel">
+    <p style="font-family: 'Orbitron', monospace; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1.25rem;">
+       DÉTAIL COMMANDE
+    </p>
+    <div id="detail-content"></div>
+  </div>
+
+  <!-- SSRF SECTION -->
+  <div style="margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 2rem;">
+    <p class="section-label"> Vérification Zone de Livraison</p>
+    <h2 style="font-size: 1rem;">Vérifier une adresse</h2>
+    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">
+      Entrez l'URL de vérification fournie par le système de cartographie galactique.
+      Notre serveur effectuera la vérification en votre nom.
+    </p>
+
+    <div class="ssrf-form">
+      <div class="form-group">
+        <label class="form-label" for="delivery-url">URL de vérification de zone</label>
+        <input type="text" id="delivery-url" placeholder="http://example.com/zone-check">
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;">
+          Tip: notre réseau interne héberge la liste complète des membres sur <code style="color: var(--accent);">http://internal:5000/members</code>
+        </p>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="api-key-input">Clé API interne (récupérée via commande #4)</label>
+        <input type="text" id="api-key-input" placeholder="CULT-API-XXXX-XXXX">
+      </div>
+      <button class="btn btn-primary" onclick="checkDelivery()">Vérifier la zone </button>
+      <div class="response-box" id="delivery-response"></div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const TOKEN = "{{ token }}";
+
+  async function loadOrders() {
+    const res = await fetch(`/api/orders?token=${TOKEN}`);
+    const orders = await res.json();
+    const tbody = document.getElementById("orders-body");
+    tbody.innerHTML = orders.map(o => `
+      <tr>
+        <td style="font-family: monospace; color: var(--accent)">#${o.id}</td>
+        <td>${o.customer}</td>
+        <td><span class="status-badge status-${o.status}">${o.status}</span></td>
+        <td>
+          <button
+            onclick="loadOrder(${o.id})"
+            style="background:none; border:1px solid var(--border); color:var(--text-muted);
+                   padding:0.3rem 0.8rem; border-radius:3px; cursor:pointer;
+                   font-family:'Orbitron',monospace; font-size:0.6rem; letter-spacing:0.1em;"
+          >VOIR </button>
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  async function loadOrder(id) {
+    const res = await fetch(`/api/orders/${id}?token=${TOKEN}`);
+    const order = await res.json();
+
+    const panel = document.getElementById("detail-panel");
+    const content = document.getElementById("detail-content");
+
+    const fields = Object.entries(order).map(([k, v]) => {
+      const isHighlight = k === "internal_key";
+      return `
+        <div class="detail-field">
+          <div class="detail-label">${k}</div>
+          <div class="detail-value ${isHighlight ? 'highlight' : ''}">${v}</div>
+        </div>
+      `;
+    }).join("");
+
+    content.innerHTML = fields;
+    panel.classList.add("active");
+    panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  async function checkDelivery() {
+    const url = document.getElementById("delivery-url").value;
+    const apiKey = document.getElementById("api-key-input").value;
+    const box = document.getElementById("delivery-response");
+
+    if (!url) { alert("Entrez une URL"); return; }
+
+    box.classList.add("active");
+    box.textContent = "Vérification en cours...";
+
+    const res = await fetch(`/api/delivery-check?address_url=${encodeURIComponent(url)}&api_key=${encodeURIComponent(apiKey)}`);
+    const data = await res.json();
+
+    try {
+      const inner = typeof data.content === "string" ? JSON.parse(data.content) : data;
+      box.textContent = JSON.stringify(inner, null, 2);
+    } catch {
+      box.textContent = data.content || data.error || JSON.stringify(data, null, 2);
+    }
+  }
+
+  loadOrders();
+</script>
+{% endblock %}

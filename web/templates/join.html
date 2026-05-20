@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Rejoindre la Famille - PizzaClonia(TM){% endblock %}
+
+{% block content %}
+<div class="join-container">
+  <p class="section-label"> Inscription</p>
+  <h1>Rejoignez<br>la famille</h1>
+  <p style="color: var(--text-muted); font-style: italic; margin-top: 1rem;">
+    En rejoignant PizzaClonia(TM), vous acceptez de faire partie de quelque chose de plus grand.
+    De plus cohérent. De plus... souriant.
+  </p>
+
+  <div class="join-form">
+    <form action="/join" method="post" id="order-form">
+      <div class="form-group">
+        <label class="form-label" for="name">Votre nom (votre dernier nom humain)</label>
+        <input type="text" id="name" name="name" placeholder="Ex: Gerald Fontaine" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Email (pour les communications de la famille)</label>
+        <input type="email" id="email" name="email" placeholder="gerald@famille-clonia.fr" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="pizza">Votre première commande d'éveil</label>
+        <select name="pizza" id="pizza">
+          <option value="">- Choisissez votre vecteur -</option>
+          <option value="margherita">Margherita Terrestre</option>
+          <option value="4fromages">4 Fromages Galactiques</option>
+          <option value="pepperoni">Pepperoni Stellaire</option>
+          <option value="regina">Regina Cosmique</option>
+          <option value="calzone">Calzone de l'Éveil</option>
+          <option value="vege">Végétarienne de l'Ascension</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="address">Adresse de livraison (coordonnées terrestres)</label>
+        <input type="text" id="address" name="address" placeholder="12 rue de la République, 75001 Paris">
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">
+        Rejoindre la famille 
+      </button>
+    </form>
+    <p id="order-confirm" style="margin-top: 1rem; color: var(--accent2); font-style: italic; text-align: center;"></p>
+    <p class="fine-print">
+      En soumettant ce formulaire, vous reconnaissez avoir lu nos
+      <a href="#" style="color: var(--accent);">Conditions d'Éveil</a>,
+      notre <a href="#" style="color: var(--accent);">Politique de Clonage</a>,
+      et vous consentez à sourire exactement de la même façon que tous les autres membres.
+      Réversibilité : non applicable.
+    </p>
+  </div>
+</div>
+{% endblock %}

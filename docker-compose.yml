@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  web:
+    build: ./web
+    ports:
+      - "8000:8000"
+    environment:
+      - INTERNAL_CULT_URL=http://internal:5000
+    networks:
+      - clonia-net
+    depends_on:
+      - internal
+
+  internal:
+    build: ./internal
+    expose:
+      - "5000"
+    networks:
+      - clonia-net
+
+networks:
+  clonia-net:
+    driver: bridge

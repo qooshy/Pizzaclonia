@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Bienvenue - PizzaClonia(TM){% endblock %}
+
+{% block content %}
+<div class="error-page" style="opacity: 1;">
+  <div style="font-size: 5rem; margin-bottom: 1.5rem;"></div>
+  <h1 style="color: var(--accent2);">Bienvenue dans la famille.</h1>
+  <p style="color: var(--text-muted); font-style: italic; margin-top: 1.5rem; max-width: 500px; text-align: center; line-height: 1.8;">
+    Votre commande a été reçue. Notre livreur est en chemin.
+    Il sourit. Vous sourirez bientôt aussi.
+  </p>
+  <p style="margin-top: 2rem; font-family: 'Orbitron', monospace; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--accent);">
+    UNITÉ #1248 - ENREGISTRÉE - EN COURS DE TRAITEMENT
+  </p>
+  <a href="/" class="btn btn-outline" style="margin-top: 2rem;">Retour à l'accueil</a>
+</div>
+{% endblock %}

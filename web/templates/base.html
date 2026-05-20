@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}PizzaClonia(TM){% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>">
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/"> Pizza<span>Clonia</span>(TM)</a>
+  <ul>
+    <li><a href="/">Accueil</a></li>
+    <li><a href="/menu">Menu</a></li>
+    <li><a href="/join">Rejoindre</a></li>
+  </ul>
+</nav>
+
+{% block content %}{% endblock %}
+
+<footer>
+  <p>(c) 2024 PIZZACLONIA(TM) GALACTIC FRANCHISE - ALL CLONES RESERVED</p>
+  <p style="margin-top:0.5rem; opacity:0.5;">Siège social : Secteur 7, Orbite Basse Terrestre - Fondée par Gerald Fontaine (et d'autres)</p>
+</footer>
+
+<script src="/static/js/app.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

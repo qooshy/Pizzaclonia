@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}PizzaClonia(TM) - Every slice brings us closer{% endblock %}
+
+{% block content %}
+
+<div class="hero">
+  <div class="ufo-decoration"></div>
+  <div class="ufo-decoration"></div>
+  <div class="ufo-decoration"></div>
+
+  <p class="hero-eyebrow"> Livraison Intergalactique </p>
+  <h1>La Pizza qui<br><em>change tout</em></h1>
+  <p class="hero-tagline">"Every slice brings us closer to the family."</p>
+
+  <div class="hero-cta">
+    <a href="/menu" class="btn btn-primary">Voir le menu</a>
+    <a href="/join" class="btn btn-outline">Rejoindre la famille</a>
+  </div>
+
+  <div style="margin-top: 4rem; font-family: 'Orbitron', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.2em;">
+    <span id="next-delivery">Calcul en cours...</span>
+  </div>
+</div>
+
+<!-- À PROPOS -->
+<section>
+  <p class="section-label"> Notre histoire</p>
+  <h2>Fondée par des passionnés.<br>Pour des gens comme vous.</h2>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2.5rem;">
+    <div>
+      <p style="color: var(--text-muted); font-style: italic; font-size: 1.05rem; line-height: 1.8;">
+        Tout a commencé quand Gerald Fontaine, entrepreneur visionnaire et grand amateur de margherita,
+        a rencontré ses <em>"investisseurs"</em> lors d'une soirée networking en 2021.
+      </p>
+      <p style="color: var(--text-muted); font-style: italic; font-size: 1.05rem; line-height: 1.8; margin-top: 1rem;">
+        Aujourd'hui, PizzaClonia(TM) compte plus de <strong style="color: var(--accent2);">1,247 membres de la famille</strong>
+        répartis sur 3 continents et un secteur orbital non divulgué.
+      </p>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.75rem;">
+      <p style="font-family: 'Orbitron', monospace; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1rem;">TÉMOIGNAGE FONDATEUR</p>
+      <blockquote style="font-style: italic; color: var(--text); line-height: 1.8;">
+        "Je cherchais des investisseurs. Je les ai trouvés. Maintenant je suis... différent.
+        En bien. Tout va très bien. Je souris beaucoup. Je dors entre 3h17 et 3h18.
+        C'est très suffisant."
+      </blockquote>
+      <p style="margin-top: 1rem; font-family: 'Orbitron', monospace; font-size: 0.65rem; color: var(--text-muted);">- GERALD FONTAINE, CO-FONDATEUR (UNITÉ #001)</p>
+    </div>
+  </div>
+</section>
+
+<!-- MENU PREVIEW -->
+<section>
+  <p class="section-label"> Nos spécialités</p>
+  <h2>Un menu pensé pour<br>chaque stade de l'éveil</h2>
+  <div class="pizza-grid">
+    {% for pizza in pizzas[:3] %}
+    <div class="pizza-card">
+      <div class="pizza-code">{{ pizza.code }}</div>
+      <div class="pizza-name">{{ pizza.name }}</div>
+      <p class="pizza-desc">{{ pizza.desc }}</p>
+      <div class="pizza-price">{{ pizza.price }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  <div style="text-align: center; margin-top: 2rem;">
+    <a href="/menu" class="btn btn-outline">Menu complet </a>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <p class="section-label"> Ils ont rejoint la famille</p>
+  <h2>Ce que disent nos membres</h2>
+  <div class="testimonials-grid">
+    {% for t in testimonials %}
+    <div class="testimonial-card">
+      <div class="stars">{% if t.stars == 5 %}{% else %}{% endif %}</div>
+      <p class="testimonial-text">"{{ t.text }}"</p>
+      <div class="testimonial-meta">
+        <span class="testimonial-name">- {{ t.name }}</span>
+        <span class="testimonial-date">Posté à {{ t.date }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <p style="text-align:center; margin-top: 2rem; font-family: 'Orbitron', monospace; font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.2em;">
+    TOUS LES AVIS SONT AUTHENTIQUES ET SPONTANÉS - AUCUN N'A ÉTÉ SOLLICITÉ OU IMPLANTÉ
+  </p>
+</section>
+
+<!-- CTA -->
+<section style="text-align: center; padding: 6rem 2rem;">
+  <p class="section-label" style="justify-content: center;"> Rejoindre</p>
+  <h2>Prêt à faire partie<br>de quelque chose de plus grand ?</h2>
+  <p style="color: var(--text-muted); font-style: italic; margin: 1.5rem 0 2rem;">
+    La famille attend. Elle a toujours attendu. Elle est très patiente.
+  </p>
+  <a href="/join" class="btn btn-primary glow">Rejoindre la famille</a>
+</section>
+
+{% endblock %}

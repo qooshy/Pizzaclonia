@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Menu - PizzaClonia(TM){% endblock %}
+
+{% block content %}
+<section style="padding-top: 3rem;">
+  <p class="section-label"> Menu Galactique</p>
+  <h1>Nos créations</h1>
+  <p style="color: var(--text-muted); font-style: italic; margin-top: 1rem;">
+    Chaque pizza a été développée en collaboration avec nos <em>partenaires scientifiques</em>.
+    Les ingrédients sont sourcés localement et au-delà.
+  </p>
+
+  <div class="pizza-grid" style="margin-top: 3rem;">
+    {% for pizza in pizzas %}
+    <div class="pizza-card">
+      <div class="pizza-code">{{ pizza.code }}</div>
+      <div class="pizza-name">{{ pizza.name }}</div>
+      <p class="pizza-desc">{{ pizza.desc }}</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+        <div class="pizza-price">{{ pizza.price }}</div>
+        <a href="/join" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.65rem;">Commander</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-top: 3rem; text-align: center;">
+    <p style="font-family: 'Orbitron', monospace; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--text-muted);">
+      ALLERGÈNES : Toutes nos pizzas contiennent du gluten, des produits laitiers,
+      et une quantité indéterminée de <em style="color: var(--accent);">potentiel d'éveil</em>.
+      Consultez votre médecin. Ou ne le faites pas. Il est peut-être déjà des nôtres.
+    </p>
+  </div>
+</section>
+{% endblock %}

@@ -78,14 +78,14 @@ Accès : http://localhost:8000
 2. Entrer l'URL du service interne (non joignable depuis le browser) :
 
 ```
-   http://internal:5000/members?api\_key=CULT-API-7731-ZETA
+   http://internal:5000/members?api_key=CULT-API-7731-ZETA
    ```
 
 3. Le serveur web effectue la requête à notre place  retourne la liste complète des membres
 4. Pour le flag :
 
 ```
-   http://internal:5000/flag?api\_key=CULT-API-7731-ZETA
+   http://internal:5000/flag?api_key=CULT-API-7731-ZETA
    ```
 
 **FLAG** : `FLAG{ssrf\_p1zz4\_cl0n14\_3xf1ltr4t10n\_c0mpl3t3\_}`

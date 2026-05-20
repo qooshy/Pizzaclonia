@@ -63,7 +63,7 @@ Accès : http://localhost:8000
 
 1. Le portail staff liste les commandes via `/api/orders?token=cl0n3-b3ta`
 2. Accéder à **chaque commande par son ID** : `/api/orders/1`, `/api/orders/2`...
-3. **Aucune vérification d'identité** - les clones se font mutuellement confiance
+3. **Aucune vérification d'identité** - les clones se font mutuellement confiance : `http://localhost:8000/api/orders/x?token=cl0n3-b3ta`
 4. La commande **#4** (Haut Prêtre ZX-9) contient la clé API interne :
 
 ```
